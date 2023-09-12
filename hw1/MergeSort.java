@@ -1,4 +1,4 @@
-package hw1;
+import java.util.Arrays;
 
 public class MergeSort { // O(nlogn)
 
@@ -9,7 +9,7 @@ public class MergeSort { // O(nlogn)
      * @param B sorted B
      * @return a sorted array 
      */
-    public static int[] merge(int[] A, int[] B) {
+    private static int[] merge(int[] A, int[] B) {
         int[] merged = new int[A.length + B.length];
 
         int i = 0; // index for array a
@@ -19,7 +19,7 @@ public class MergeSort { // O(nlogn)
         // sort arrays into merged
         while (i < A.length && j < B.length) {
             int a = A[i];
-            int b = B[i];
+            int b = B[j];
             if (a <= b) {
                 merged[k] = a;
                 i++;
@@ -29,27 +29,74 @@ public class MergeSort { // O(nlogn)
             }
             k++;
         }
-        
+
         int[] C = null; // array to merge into `merged`
-        int c = 0; // starting index of index (not completely iterated over)
+        int l = 0; // index for array c
         // determine which array has remainders and to be merged into `merged`
         if (i < A.length) {
             C = A;
-            c = i;
+            l = i;
         } else if (j < B.length) {
             C = B;
-            c = j;
+            l = j;
         }
 
         // merge remaining array
-        for (int l = c; l < merged.length; l++) {
-            
+        for (int m = l; m < C.length; m++) {
+            int c = C[m];
+            merged[k] = c;
+            k++; 
         }
 
         return merged;
     }
 
+    /**
+     * Merge sort algorithm
+     * O(nlogn)
+     * @param array initial input
+     * @return sorted array
+     */
+    public static int[] mergeSort(int[] array) {
+        if (array.length == 0 || array.length == 1) {
+            return array;
+        }
+
+        // determine what the middle should be
+        int middle;
+        int[] A, B;
+        if (array.length % 2 == 0) { // even array
+            middle = array.length / 2;
+            A = new int[middle];
+            B = new int[middle];
+        } else { // odd array
+            middle = (array.length - 1) / 2;
+            A = new int[middle + 1];
+            B = new int[middle];
+        }
+
+        // fill in both arrays
+        int i = 0; // index for array
+        for (int j = 0; j < A.length; j++) {
+            A[j] = array[i];
+            i++;
+        }
+
+        for (int j = 0; j < B.length; j++) {
+            B[j] = array[i];
+            i++;
+        }
+
+        // use recursion to merge sorted arrays
+        int[] A_merged = mergeSort(A);
+        int[] B_merged = mergeSort(B);
+
+        return merge(A_merged, B_merged);
+    }
+
     public static void main(String[] args) {
-        
+        int[] A = {12, 11, 13, 5, 6, 7};
+        int[] sorted = mergeSort(A);
+        System.out.println(Arrays.toString(sorted));
     }
 }
