@@ -29,8 +29,8 @@ public class Planters {
             if (highestS >= highestT) {
                 return "NO"; 
             } else {
-                swap(sortedS, sortedT, sortedS.length - 1 - i, sortedT.length - 1);
-                numSwapped++;
+                swap(sortedS, sortedT, sortedS.length - 1 - i, sortedT.length - 1); // swap both elements 
+                numSwapped++; // and proceed to the next highest in T since we swapped plants
             }
         }
 
