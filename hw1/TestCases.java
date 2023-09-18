@@ -2,6 +2,7 @@ import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.Map;
 
@@ -10,8 +11,8 @@ public class TestCases {
         LinkedHashMap<String, String> files = new LinkedHashMap<>();
         files.put("input1.txt", "NO");
         files.put("input2.txt", "YES");
-        files.put("input3.txt", "NO");
-        files.put("input4.txt", "YES");
+        // files.put("input3.txt", "NO");
+        // files.put("input4.txt", "YES");
 
         for (Map.Entry<String, String> entry : files.entrySet()) {
             FileReader file = new FileReader(entry.getKey());
@@ -31,9 +32,12 @@ public class TestCases {
             for (int i = 0; i < T.length; i++) {
                 T[i] = Integer.parseInt(thirdLine[i]);
             }
-
+            
             // get result
+            System.out.println("Initial S: " + Arrays.toString(S) +", Initial T: " + Arrays.toString(T));
             System.out.println("Expected:" + entry.getValue() + ", Actual: " + Planters.planters(S, T));
+            System.out.println("After S: " + Arrays.toString(S) +", After T: " + Arrays.toString(T));
+            System.out.println();
         }
     }
 

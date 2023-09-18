@@ -20,56 +20,35 @@ public class Planters {
      * @param S Planters
      * @param T Extra planters
      */
-    // public static String planters(int[] S, int T[]) {
-    //     int[] sortedS = AlgoUtils.mergeSort(S);
-    //     int[] sortedT = AlgoUtils.mergeSort(T);
-    //     // System.out.println(Arrays.toString(sortedS));
-    //     // System.out.println(Arrays.toString(sortedT));
-    //     int tIndex = sortedT.length - 1;
-    //     for (int sIndex = sortedS.length - 1; sIndex >= 0; sIndex--) {
-    //         int s = sortedS[sIndex];
-    //         int t = sortedT[tIndex];
-    //         int nextT = sortedT[tIndex - 1];
-    //         if (nextT >= t) {
-    //             tIndex--;
-    //         }
-
-    //         if (s >= t) {
-    //             return "NO";
-    //         } else {
-    //             swap(sortedS, sortedT, sIndex, tIndex);
-    //         }
-    //     }
-
-    //     return "YES";
-    // }
     public static String planters(int[] S, int T[]) {
         int[] sortedS = AlgoUtils.mergeSort(S);
         int[] sortedT = AlgoUtils.mergeSort(T);
         // System.out.println(Arrays.toString(sortedS));
         // System.out.println(Arrays.toString(sortedT));
-        int currentSindex = sortedS.length - 1;
+
+        int swapped = sortedS[sortedS.length - 1]; // initial value
         int currentTindex = sortedT.length - 1;
-        
-        // O(n^2)?
-        int lowestT = Integer.MIN_VALUE;
-        while(currentSindex >= 0) { // iterating backwards
-            if (currentTindex == -1) {
-                return "NO";
-            }
-            int s = sortedS[currentSindex];
+        for (int i = 0; i < sortedS.length; i++) {
+            int sIndex = sortedS.length - 1 - i;
+            int s = sortedS[sIndex];
             int t = sortedT[currentTindex];
 
-            if (s >= t) {
+            if (t > s) {
+                swap(sortedS, sortedT, sIndex, currentTindex);
+                sortedT[currentTindex] = 0; // not using this value anymore since it is sorted
                 currentTindex--;
-            } else {
-                swap(sortedS, sortedT, currentSindex, currentTindex);
-                currentTindex = sortedT.length - 1;
-                lowestT = Integer.MIN_VALUE;
-                currentSindex--;
             }
+            if (t > swapped) {
+                int temp = sortedT[currentTindex];
+                sortedT[currentTindex] = 0;
+                swapped = temp;
+                currentTindex--;
+            } else if (swapped > s) {
+                int temp = sortedS[sIndex];
+                sortedS[sIndex] = swapped;
+                swapped = temp;
+            }            
         }
-        System.out.println(Arrays.toString(sortedS));
         return "YES";
     }
 
@@ -92,7 +71,8 @@ public class Planters {
         for (int i = 0; i < T.length; i++) {
             T[i] = Integer.parseInt(thirdLine[i]);
         }
-
+        System.out.println(Arrays.toString(S));
+        System.out.println((Arrays.toString(T)));
         // get result
         System.out.println(planters(S, T));
     }
@@ -100,6 +80,5 @@ public class Planters {
     public static void main(String[] args) throws IOException {
         //plantersMain(args);
         TestCases.main(args);
-
     }
 }
