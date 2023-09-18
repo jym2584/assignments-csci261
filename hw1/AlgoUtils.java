@@ -1,6 +1,6 @@
 import java.util.Arrays;
 
-public class MergeSort { // O(nlogn)
+public class AlgoUtils { // O(nlogn)
 
     /**
      * Merge 2 sorted arrays
@@ -94,9 +94,29 @@ public class MergeSort { // O(nlogn)
         return merge(A_merged, B_merged);
     }
 
+    /**
+     * Uses binary search to find the highest value 
+     * O(logn) time complexity
+     * @param array array to search
+     * @param target target value to find
+     * @param start starting index
+     * @param end ending index
+     * @return index of value at array
+     */
+    public static int binarySearch(int[] array, int target, int start, int end) {
+        int middle = (start + end) / 2; // middle index
+        if (array[middle] == target) {
+            return middle;
+        } else if (array[middle] < target) {
+            return binarySearch(array, target, middle + 1, end); // search from the right
+        } else {
+            return binarySearch(array, target, start, middle - 1); // search from the left
+        }
+    }
     public static void main(String[] args) {
         int[] A = {12, 11, 13, 5, 6, 7};
         int[] sorted = mergeSort(A);
         System.out.println(Arrays.toString(sorted));
+        System.out.println(binarySearch(sorted, 11, 0, sorted.length));
     }
 }
