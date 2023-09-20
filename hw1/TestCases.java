@@ -11,8 +11,8 @@ public class TestCases {
         LinkedHashMap<String, String> files = new LinkedHashMap<>();
         files.put("input1.txt", "NO");
         files.put("input2.txt", "YES");
-        // files.put("input3.txt", "NO");
-        // files.put("input4.txt", "YES");
+        files.put("input3.txt", "NO");
+        files.put("input4.txt", "YES");
 
         for (Map.Entry<String, String> entry : files.entrySet()) {
             FileReader file = new FileReader(entry.getKey());
@@ -34,10 +34,7 @@ public class TestCases {
             }
             
             // get result
-            System.out.println("Initial S: " + Arrays.toString(S) +", Initial T: " + Arrays.toString(T));
             System.out.println("Expected:" + entry.getValue() + ", Actual: " + Planters.planters(S, T));
-            System.out.println("After S: " + Arrays.toString(S) +", After T: " + Arrays.toString(T));
-            System.out.println();
         }
     }
 

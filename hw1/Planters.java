@@ -25,30 +25,41 @@ public class Planters {
         int[] sortedT = AlgoUtils.mergeSort(T);
         // System.out.println(Arrays.toString(sortedS));
         // System.out.println(Arrays.toString(sortedT));
-
-        int swapped = sortedS[sortedS.length - 1]; // initial value
+        System.out.println("Initial S: " + Arrays.toString(sortedS) +", Initial T: " + Arrays.toString(sortedT));
+        int swapped; // initial value
         int currentTindex = sortedT.length - 1;
-        for (int i = 0; i < sortedS.length; i++) {
-            int sIndex = sortedS.length - 1 - i;
-            int s = sortedS[sIndex];
-            int t = sortedT[currentTindex];
+        int s = sortedS[sortedS.length - 1];
+        int t = sortedT[currentTindex];
 
-            if (t > s) {
+        // initial case to initialize swapped
+        if (t > s) {
+            swapped = s;
+            swap(sortedS, sortedT, sortedS.length - 1, currentTindex);
+            sortedT[currentTindex] = 0;
+        } else {
+            return "NO";
+        }
+
+        for (int i = 1; i < sortedS.length; i++) {
+            int sIndex = sortedS.length - 1 - i;
+            s = sortedS[sIndex];
+            t = sortedT[currentTindex];
+            
+            if (t > s && t > swapped) {
                 swap(sortedS, sortedT, sIndex, currentTindex);
-                sortedT[currentTindex] = 0; // not using this value anymore since it is sorted
-                currentTindex--;
-            }
-            if (t > swapped) {
-                int temp = sortedT[currentTindex];
                 sortedT[currentTindex] = 0;
-                swapped = temp;
                 currentTindex--;
-            } else if (swapped > s) {
+            } else if (s >= t && swapped > t && swapped > s) {
                 int temp = sortedS[sIndex];
                 sortedS[sIndex] = swapped;
                 swapped = temp;
-            }            
+            } else if (t > s) {
+                swap(sortedS, sortedT, sIndex, currentTindex);
+                sortedT[currentTindex] = 0;
+                currentTindex--;
+            }
         }
+        System.out.println("After S: " + Arrays.toString(sortedS) +", After T: " + Arrays.toString(sortedT));
         return "YES";
     }
 
