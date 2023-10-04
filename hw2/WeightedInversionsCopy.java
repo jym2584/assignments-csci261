@@ -10,9 +10,10 @@ public class WeightedInversionsCopy {
         int middle = array.length / 2;
       
         // Recursively sort the left and right halves of the array
-        int[] left = (int[])mergeSortWeightedInversions(Arrays.copyOfRange(array, 0, middle))[1];
-        int[] right = (int[])mergeSortWeightedInversions(Arrays.copyOfRange(array, middle, array.length))[1];
-      
+        Object[] left = mergeSortWeightedInversions(Arrays.copyOfRange(array, 0, middle));
+        Object[] right = mergeSortWeightedInversions(Arrays.copyOfRange(array, middle, array.length));
+        
+        int[] leftArray
         // Merge the sorted left and right halves of the array
         int[] mergedArray = new int[array.length];
         int currentLeft = 0;
@@ -51,7 +52,7 @@ public class WeightedInversionsCopy {
           currentRight++;
         }
       
-        return new Object[]{count, mergedArray};
+        return new Object[]{(int), mergedArray};
       }
     public static void main(String[] args) {
         int[] inversions = mergeSortWeightedInversions(new int[]{2, 5, 3, 1, 4});
