@@ -22,6 +22,27 @@ public class MaxRectangle {
     public static boolean isHorizontal(Pair left, Pair right) {
         return left.getY() == right.getY();
     }
+    
+    public static boolean isVertical(Pair left, Pair right) {
+        return left.getX() == right.getY();
+    }
+
+    /**
+     * Retrieves the lowest new X,Y pair if left pair is lower than the right pair
+     * @param left
+     * @param right
+     * @return
+     */
+    public int getOptimalCoordinateIfNegativeDir(Pair left, Pair right) {
+        int x, y;
+        if (right.getY() < left.getY()) {
+            y = right.getY();
+        } else {
+            return left.getX();
+        }
+    }
+
+
     public static int maxAreaHorizontal(int hist[]) {
         Stack<Integer> stack = new Stack<>();
         int maxArea = 0;
@@ -70,6 +91,41 @@ public class MaxRectangle {
         return maxArea;
     }
 
+    public static int maxAreaHorizontalPairs(Pair pairs[]) {
+
+        int pairsOnlyNeeded = 0;
+        for (int i = 0 ; i < pairs.length - 1; i++) {
+            if (isHorizontal(pairs[i], pairs[i+1])) {
+                pairsOnlyNeeded++;
+            }
+        }
+        
+        int pairsNewI = 0;
+        Pair[] pairsNew = new Pair[pairsOnlyNeeded];
+        for (int i = 0 ; i < pairs.length - 1; i++) {
+            if (isHorizontal(pairs[i], pairs[i+1])) {
+                pairsNew[pairsNewI] = pairs[i];
+                pairsNewI++;
+            }
+        } 
+
+        StackPair stack = new StackPair(pairs.length);
+        int maxArea = 0;
+        int i = 0;
+        while (i < pairsNew.length - 1) {
+            Pair current = pairsNew[i];
+            Pair next = pairsNew[i+1];
+            if (isPairPositive(current, next)) {
+                stack.push(current);
+                i++;
+            } else {
+                Pair prev = stack.pop();
+                int area = 
+            }
+        }
+
+        return maxArea;
+    }
 
     public static int maxAreaVertical(Pair[] pairs) {
         int maxArea = 0;
@@ -122,5 +178,6 @@ public class MaxRectangle {
         System.out.println(Arrays.toString(y_pairs));
 
         System.out.println(maxAreaHorizontal(y_pairs));
+        System.out.println(maxAreaHorizontalPairs(pairs));
     }
 }

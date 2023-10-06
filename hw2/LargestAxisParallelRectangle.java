@@ -1,28 +1,32 @@
-public class LargestAxisParallelRectangle {
-  public static int largestAxisParallelRectangle(int[][] polygon) {
-    int maxArea = 0;
-    int currentArea = 0;
-    int[] currentRectangle = new int[]{polygon[0][0], polygon[0][1], polygon[0][0], polygon[0][1]};
+import java.io.IOException;
+import java.util.Stack;
 
-    for (int i = 1; i < polygon.length; i++) {
-      if (polygon[i][1] > currentRectangle[3]) {
-        currentArea += (polygon[i][1] - currentRectangle[3]) * (currentRectangle[2] - currentRectangle[0]);
-        currentRectangle = new int[]{currentRectangle[0], currentRectangle[1], currentRectangle[2], polygon[i][1]};
+  public class LargestAxisParallelRectangle {
+    public static int findLargestRectangleArea(Pair[] vertices) {
+      int n = vertices.length;
+      Stack<Integer> stack = new Stack<>();
+      int maxArea = 0;
+
+      for (int i = 0; i < n; i++) {
+          while (!stack.isEmpty() && vertices[i].getY() < vertices[stack.peek()].getY()) {
+              int height = vertices[stack.pop()].getY();
+              int width = i - (stack.isEmpty() ? 0 : stack.peek() + 1);
+              maxArea = Math.max(maxArea, height * width);
+          }
+          stack.push(i);
       }
 
-      if (currentArea > maxArea) {
-        maxArea = currentArea;
+      while (!stack.isEmpty()) {
+          int height = vertices[stack.pop()].getY();
+          int width = n - (stack.isEmpty() ? 0 : stack.peek() + 1);
+          maxArea = Math.max(maxArea, height * width);
       }
-    }
 
-    return maxArea;
+      return maxArea;
   }
-  public static void main(String[] args) {
-    int[][] polygon = {{3, 0}, {3, 1}, {4, 1}, {4, 3}, {6, 3}, {6, 6}, {10, 6}, {10, 2},
-                    {13, 2}, {13, 5}, {17, 5}, {17, 1}, {18, 1}, {18, 8}, {20, 8}, {20, 0}};
-
-    int largestArea = LargestAxisParallelRectangle.largestAxisParallelRectangle(polygon);
-
-    System.out.println(largestArea);
+    public static void main(String[] args) throws IOException {
+      Pair[] pairs = TestCases.generatePairs("input1.txt");
+      int maxArea = findLargestRectangleArea(pairs);
+      System.out.println("Largest possible area of an axis-parallel rectangle: " + maxArea);
   }
 }

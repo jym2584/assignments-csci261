@@ -13,10 +13,11 @@ public class WeightedInversions {
                 array[currentArray] = left[currentLeft];
                 currentLeft++;
             } else { // inversion
+                System.out.println(String.format("INVERSION: (%s, %s) %s", left[currentLeft], right[currentRight], Arrays.toString(array)));
                 array[currentArray] = right[currentRight];
+                System.out.println(String.format("INVERSION AFTER: %s,", Arrays.toString(array)));
                 currentRight++;
                 countMiddle += left.length - currentLeft;
-                System.out.println(String.format("countMiddle: %s", countMiddle));
             }
             currentArray++;
         }
@@ -73,7 +74,5 @@ public class WeightedInversions {
     public static void main(String[] args) {
         int inversions = countingInversions(new int[]{2, 5, 3, 1, 4});
         System.out.println(inversions);
-        int inversion2 = countingInversions(new int[]{5, 4, 3, 2, 1});
-        System.out.println(inversion2);
     }
 }
