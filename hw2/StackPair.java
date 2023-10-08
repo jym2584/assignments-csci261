@@ -31,7 +31,11 @@ public class StackPair {
     }
 
     public Pair peek() {
-        return this.array[this.size - 1];
+        try {
+            return this.array[this.size - 1];
+        } catch (IndexOutOfBoundsException ioe) {
+            return null;
+        }
     }
 
     @Override
