@@ -1,3 +1,4 @@
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class MaxRectangle {
@@ -91,7 +92,7 @@ public class MaxRectangle {
         // initialize array from input file
         Scanner scanner = new Scanner(System.in);
 
-        int length = scanner.nextInt();
+        int length = Integer.parseInt(scanner.nextLine());
         Pair[] pairs = new Pair[length];
         for(int i = 0; i < length; i++){
             String[] input = scanner.nextLine().split(" ");

@@ -1,34 +1,24 @@
-import java.util.Arrays;
+import java.util.Scanner;
 
 public class WeightedInversions {
     private static int countAcrossMiddle(int[] array, int[] left, int[] right) {
         int countMiddle = 0;
         int currentLeft = 0;
         int currentRight = 0;
-        int currentArray = 0; // Track the current position in the original array
-
-        System.out.println(String.format("array=%s, left=%s, right=%s", Arrays.toString(array), Arrays.toString(left), Arrays.toString(right)));
-        while (currentLeft < left.length && currentRight < right.length) {
-            if (left[currentLeft] <= right[currentRight]) { // shift scanning to right on left array there are no inversions on current element in left
-                array[currentArray] = left[currentLeft];
+        while (true) {
+            if (currentRight >= right.length) {
+                currentRight = 0;
                 currentLeft++;
-            } else { // inversion
-                System.out.println(String.format("INVERSION: (%s, %s) %s", left[currentLeft], right[currentRight], Arrays.toString(array)));
-                array[currentArray] = right[currentRight];
-                System.out.println(String.format("INVERSION AFTER: %s,", Arrays.toString(array)));
-                currentRight++;
-                countMiddle += left.length - currentLeft;
             }
-            currentArray++;
+            if (currentLeft >= left.length) {
+                break;
+            }
+            if (left[currentLeft] > right[currentRight]) {
+                int distance = left.length - (currentLeft - currentRight);
+                countMiddle += distance;
+            }
+            currentRight++;
         }
-        while (currentLeft < left.length) {
-            array[currentArray++] = left[currentLeft++];
-        }
-    
-        while (currentRight < right.length) {
-            array[currentArray++] = right[currentRight++];
-        }
-
         return countMiddle;
     }
 
@@ -72,7 +62,25 @@ public class WeightedInversions {
 
 
     public static void main(String[] args) {
-        int inversions = countingInversions(new int[]{2, 5, 3, 1, 4});
-        System.out.println(inversions);
+        Scanner scanner = new Scanner(System.in);
+        int[] numbers = new int[Integer.parseInt(scanner.nextLine())];
+        String[] input = scanner.nextLine().split(" ");
+        for (int i = 0; i < input.length; i++) {
+            numbers[i] = Integer.parseInt(input[i]);
+        }
+        scanner.close();
+        // int inversions = countingInversions(numbers);
+        // System.out.println(inversions);
+
+        // n^2 solution, gave up
+        int count = 0;
+        for (int i = 0; i < numbers.length; i++) {
+            for (int j = i + 1; j < numbers.length; j++) {
+                if (numbers[i] > numbers[j]) {
+                    count += Math.abs(j - i);
+                }
+            }
+        }
+        System.out.println(count);
     }
 }
