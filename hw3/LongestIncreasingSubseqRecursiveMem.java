@@ -1,36 +1,51 @@
 import java.util.Scanner;
 
 /**
- * Fails 5th test case for solving this problem using just recursion (no required complexity)
+ * Recursive appraoch using memorization (do not use)
  */
-public class LongestIncreasingSubseqRecursive {
+public class LongestIncreasingSubseqRecursiveMem {
 
     /**
-     * Longest Increasing subsequence problem using the top down (recursion) approach
+     * Longest Increasing subsequence problem using the top down (recursion) and memorization (for better time complexity) approach  
      * @param j calculates possible values up to length j
      * @param A array input
      * @param memory incorporates memorization to store previously calculated results to avoid redundant recursive calls
      * @return count of longest increasing subsequence
      */
-    public static int incrSubseqRecursive(int j, int[] A) {
+    public static int incrSubseqRecursive(int j, int[] A, int[] memorization) {
         if (j == 0) { // base case; element itself is a subsequence
             return 1;
+        }
+
+        // grab element if part of the solution was already solved
+        if (memorization[j] != 0) {
+            return memorization[j];
         }
         
         int maxLength = 1; // minimum length of a subsequence is the element itself
         for (int i = 1; i < j; i++) {
-            int length = 1 + incrSubseqRecursive(i, A); // minimum length of a subsequence is the element itself & recursively calculates the length of the subsequence up to the current index
+            int length = 1 + incrSubseqRecursive(i, A, memorization); // minimum length of a subsequence is the element itself & recursively calculates the length of the subsequence up to the current index
             if (A[i - 1] < A[j - 1] && length > maxLength) { // find longest subsequence
                 maxLength = length;
             }
         }
 
+        memorization[j] = maxLength; // store solved solution in array
+
         return maxLength;
     }
 
     /**
-     * TEST FUNCTION
+     * Increasing subsequence problem
+     * @param j
+     * @param A
+     * @return
      */
+    public static int incrSubseqRecursive(int j, int[]A) {
+        int[] memorization = new int[A.length];
+        return incrSubseqRecursive(j, A, memorization);
+    }
+
     public static void testLIS(String[] input) {
         int[] array = new int[input.length];
 
@@ -41,9 +56,6 @@ public class LongestIncreasingSubseqRecursive {
         System.out.println(incrSubseqRecursive(array.length - 1, array));
     }
 
-    /**
-     * TEST FUNCTION
-     */
     public static void testLISlocal() {
         String[] input = "41 18467 6334 26500 19169 15724 11478 29358 26962 24464".split(" ");
         testLIS(input); // 4
@@ -56,15 +68,15 @@ public class LongestIncreasingSubseqRecursive {
     }
 
     public static void main(String[] args) {
-        // testLISlocal();
-        Scanner scanner = new Scanner(System.in);
-        int length = Integer.parseInt(scanner.nextLine());
-        String[] input = scanner.nextLine().split(" ");
-        scanner.close();
-        int[] array = new int[length];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = Integer.parseInt(input[i]);
-        }
-        System.out.println(incrSubseqRecursive(array.length - 1, array));
+        testLISlocal();
+        // Scanner scanner = new Scanner(System.in);
+        // int length = Integer.parseInt(scanner.nextLine());
+        // String[] input = scanner.nextLine().split(" ");
+        // scanner.close();
+        // int[] array = new int[length];
+        // for (int i = 0; i < array.length; i++) {
+        //     array[i] = Integer.parseInt(input[i]);
+        // }
+        // System.out.println(incrSubseqRecursive(array.length - 1, array));
     }
 }
