@@ -16,18 +16,19 @@ public class DoubleKnapsackSolution {
             for (int currentWeightOne = 0; currentWeightOne <= maxWeightOne; currentWeightOne++) { // iterate over knapsack 1
                 for (int currentWeightTwo = 0; currentWeightTwo <= maxWeightTwo; currentWeightTwo++) { // iterate over knapsack 2
                     OPT[itemIndex][currentWeightOne][currentWeightTwo] = OPT[itemIndex - 1][currentWeightOne][currentWeightTwo]; // maximum value obtained without including the current item
+                    int currentCostAchiveable = OPT[itemIndex][currentWeightOne][currentWeightTwo];
                     Item item = items[itemIndex - 1]; // get the current item
                     // Check if the item can be placed in knapsack one or two
                     if (item.getWeight() <= currentWeightOne) { // knapsack one
-                        int cost = OPT[itemIndex - 1][currentWeightOne - item.getWeight()][currentWeightTwo] + item.getCost();
-                        if (cost > OPT[itemIndex][currentWeightOne][currentWeightTwo]) {
-                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost;
+                        int cost = OPT[itemIndex - 1][currentWeightOne - item.getWeight()][currentWeightTwo] + item.getCost(); // calculate current cost from DP array
+                        if (cost > currentCostAchiveable) {
+                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost; // add the cost of the item in the first knapsack
                             itemsOPT[itemIndex][currentWeightOne][currentWeightTwo] = 1; // Use DP to store the item that was placed on knapsack one in the DP array
                         }
                     } else if (item.getWeight() <= currentWeightTwo) { // knapsack two
-                        int cost = OPT[itemIndex - 1][currentWeightOne][currentWeightTwo - item.getWeight()] + item.getCost();
-                        if (cost > OPT[itemIndex][currentWeightOne][currentWeightTwo]) {
-                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost;
+                        int cost = OPT[itemIndex - 1][currentWeightOne][currentWeightTwo - item.getWeight()] + item.getCost(); // calculate current cost from DP array
+                        if (cost > currentCostAchiveable) {
+                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost; // add the cost of the item in the second knapsack
                             itemsOPT[itemIndex][currentWeightOne][currentWeightTwo] = 2; // Use DP to store the item that was placed on knapsack one in the DP array
                         }
                     }

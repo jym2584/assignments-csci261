@@ -55,14 +55,14 @@ public class DoubleKnapsack {
                     Item item = items[itemIndex - 1]; // get the current item
                     // Check if the item can be placed in knapsack one or two
                     if (item.getWeight() <= currentWeightOne) { // knapsack one
-                        int cost = OPT[itemIndex - 1][currentWeightOne - item.getWeight()][currentWeightTwo] + item.getCost();
+                        int cost = OPT[itemIndex - 1][currentWeightOne - item.getWeight()][currentWeightTwo] + item.getCost(); // calculate current cost from DP array
                         if (cost > currentCostAchiveable) {
-                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost;
+                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost; // add the cost of the item in the first knapsack
                         }
                     }else if (item.getWeight() <= currentWeightTwo) {  // knapsack two
-                        int cost = OPT[itemIndex - 1][currentWeightOne][currentWeightTwo - item.getWeight()] + item.getCost();
+                        int cost = OPT[itemIndex - 1][currentWeightOne][currentWeightTwo - item.getWeight()] + item.getCost(); // calculate current cost from DP array
                         if (cost > currentCostAchiveable) {
-                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost;
+                            OPT[itemIndex][currentWeightOne][currentWeightTwo] = cost; // add the cost of the item in the second knapsack
                         }
                     }
                 }
@@ -118,6 +118,7 @@ public class DoubleKnapsack {
     }
 
     public static void main(String[] args) throws IOException {
-        testsLocal();
+        //testsLocal();
+        stdinAlgo();
     }
 }
