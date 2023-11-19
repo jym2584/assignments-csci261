@@ -1,3 +1,5 @@
+import java.util.Arrays;
+
 /**
  * Array representation of a graph. Assumes there exists vertices that precedes the value of the max vertex.
  */
@@ -7,7 +9,7 @@ public class GraphMatrix {
     
     public GraphMatrix(int maxVertexValue) {
         this.size = maxVertexValue;
-        this.matrix = new int[maxVertexValue + 1][maxVertexValue + 1];
+        this.matrix = new int[this.size + 1][this.size + 1];
     }
     
     public int getNumVertices() {
@@ -35,14 +37,15 @@ public class GraphMatrix {
      */
     public int[] bfs(int startVertex) {
         // initialize data structures
-        boolean[] seen = new boolean[this.matrix.length];
-        int[] dist = new int[this.matrix.length];
+        boolean[] seen = new boolean[this.size + 1];
+        int[] dist = new int[this.size + 1];
+        dist[0] = Integer.MAX_VALUE;
         for (int i = 1; i < seen.length; i++) {
             seen[i] = false;
             dist[i] = Integer.MAX_VALUE;
         }
 
-        int[] queue = new int[this.matrix.length];
+        int[] queue = new int[this.size + 1];
         int beg = 0, end = 0;
 
         // initialize starting vertex
@@ -55,7 +58,7 @@ public class GraphMatrix {
             int head = queue[beg++]; // dequeue
 
             // explore through all possible neighbors in the current vertex
-            for (int neighbor = 1; neighbor < this.matrix.length; neighbor++) {
+            for (int neighbor = 1; neighbor <= this.size; neighbor++) {
 
                 // add neighbors that are both connected and seen
                 if (this.connected(head, neighbor) && !seen[neighbor]) {
@@ -76,7 +79,7 @@ public class GraphMatrix {
      * @return array indicating whether each vertex is reachable from the starting vertex
      */
     public boolean[] dfs(int startVertex) {
-        boolean[] visited = new boolean[this.matrix.length];
+        boolean[] visited = new boolean[this.size + 1];
         visitDFS(startVertex, visited);
         return visited;
     }
@@ -88,7 +91,7 @@ public class GraphMatrix {
      */
     public void visitDFS(int vertex, boolean[] visited) {
         visited[vertex] = true;
-        for (int neighbor = 1; neighbor <= this.matrix.length; neighbor++) {
+        for (int neighbor = 1; neighbor <= this.size; neighbor++) {
             if (this.connected(vertex, neighbor) && !visited[neighbor]) {
                 visitDFS(neighbor, visited);
             }
@@ -96,16 +99,22 @@ public class GraphMatrix {
     }
 
     public static void main(String[] args) {
-        int maxVertexValue = 5;
-        GraphMatrix graph = new GraphMatrix(maxVertexValue);
+        // test
+        GraphMatrix graph = new GraphMatrix(9);
 
-        // Add some edges for testing
         graph.connectUndirected(1, 2);
         graph.connectUndirected(1, 3);
         graph.connectUndirected(2, 4);
-        graph.connectUndirected(3, 5);
+        graph.connectUndirected(4, 3);
+        graph.connectUndirected(5, 4);
+        graph.connectUndirected(5, 6);
+        graph.connectUndirected(6, 8);
+        graph.connectUndirected(8, 7);
+        graph.connectUndirected(7, 5);
+        // 9 is unreachable
 
-        // Perform BFS starting from vertex 0
-        graph.bfs(3);
+        System.out.println("[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]");
+        System.out.println(Arrays.toString(graph.bfs(1)));
+        System.out.println(Arrays.toString(graph.dfs(1)));
     }
 }
