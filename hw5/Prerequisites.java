@@ -46,6 +46,7 @@ public class Prerequisites {
      * @param graph
      */
     public static void prerequisitesProblem(GraphMatrixDirected graph) {
+        // initialize data structures
         int[] chainLength = new int[graph.getNumVertices() + 1];
         int[] queue = new int[graph.getNumVertices() + 1];
         int beg = 0, end = 0;
@@ -58,10 +59,11 @@ public class Prerequisites {
             }
         }
 
-        // Modified BFS algorithm to solve the pre-requisites problem
+        // traverse through vertexes using bfs
         while (beg < end) {
             int head = queue[beg++]; // dequeue
-
+            
+            // explore through all possible neighbors in the current vertex
             for (int neighbor = 1; neighbor <= graph.getNumVertices(); neighbor++) {
                 if (graph.connected(head, neighbor)) {
                     preReqCount[neighbor]--; // assumes that the neighbor has one pre-requisite fulfilled
@@ -79,7 +81,7 @@ public class Prerequisites {
             }
         }
 
-        // Find the maximum length in the maxLength array
+        // Find the maximum length in the chainLength array
         int maxChain = 0;
         for (int i = 1; i <= graph.getNumVertices(); i++) {
             if (maxChain < chainLength[i]) {
