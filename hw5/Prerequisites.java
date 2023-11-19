@@ -1,5 +1,40 @@
 import java.util.Scanner;
-
+/**
+ * 
+ * 
+ * Getting Java heap space errors with test 5
+ * 
+ * ===== Test 5
+ * /usr/local/jdk/bin/java -ea -Xss16M -classpath .:../../submit_java/Prerequisites/ Prerequisites < input-1.5 > OUT.5
+ * 
+ * Your output did not match the correct output.
+ * Your output:
+ * Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+ *         at GraphMatrixDirected.<init>(GraphMatrixDirected.java:12)
+ *         at Prerequisites.stdinAlgo(Prerequisites.java:64)
+ *         at Prerequisites.main(Prerequisites.java:88)
+ * ----------
+ * Correct output:
+ * 256
+ * ----------
+ * Differences (OUT.5 is yours; answer-1.5 is correct):
+ * *** OUT.5       2023-11-18 22:57:49.522297000 -0500
+ * --- answer-1.5  2021-08-12 12:47:37.804745000 -0400
+ * ***************
+ * *** 1,4 ****
+ * ! Exception in thread "main" java.lang.OutOfMemoryError: Java heap space
+ * !       at GraphMatrixDirected.<init>(GraphMatrixDirected.java:12)
+ * !       at Prerequisites.stdinAlgo(Prerequisites.java:64)
+ * !       at Prerequisites.main(Prerequisites.java:88)
+ * --- 1 ----
+ * ! 256
+ * 
+ * 
+ * Files being saved:
+ * GraphMatrixDirected.class GraphMatrixDirected.java Prerequisites.class Prerequisites.java
+ * 
+ * hmwk5-3 has been submitted WITH ERRORS.
+ */
 public class Prerequisites {
     /**
      * Keeps track of the number of pre-requisites for each course

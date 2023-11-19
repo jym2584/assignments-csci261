@@ -98,8 +98,7 @@ public class GraphMatrixDirected {
         }
     }
 
-
-    public static void main(String[] args) {
+    public static void test() {
         // test
         GraphMatrixDirected graph = new GraphMatrixDirected(9);
 
@@ -129,5 +128,12 @@ public class GraphMatrixDirected {
         System.out.println("[0, 1, 2, 3, 4, 5, 6, 7, 8, 9]");
         System.out.println(Arrays.toString(graph.bfs(1)));
         System.out.println(Arrays.toString(graph.dfs(1)));
+    }
+    public static void main(String[] args) {
+        //test();
+
+        // throws java heap space error
+        GraphMatrixDirected graph = new GraphMatrixDirected(100000);
+
     }
 }
